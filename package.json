@@ -1,0 +1,25 @@
+{
+    "name": "vectordb.js",
+    "version": "0.0.1",
+    "description": "Simple local vector database",
+    "main": "src/index.js",
+    "type": "module",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "mocha"
+    },
+    "keywords": [
+        "vector",
+        "database",
+        "embeddings"
+    ],
+    "author": "The Maximalist",
+    "license": "MIT",
+    "dependencies": {
+        "@themaximalist/embeddings.js": "^0.0.1",
+        "hnswlib-node": "^2.1.0",
+        "mocha": "^10.2.0"
+    }
+}
