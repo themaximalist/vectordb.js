@@ -1,5 +1,5 @@
 {
-    "name": "vectordb.js",
+    "name": "@themaximalist/vectordb.js",
     "version": "0.0.1",
     "description": "Simple local vector database",
     "main": "src/index.js",
