@@ -12,6 +12,7 @@ describe("VectorDB", function () {
         await db.add("blue");
 
         const result = await db.search("dark orange");
+        console.log(result);
         assert(result.length === 1);
         assert(result[0].input === "orange");
     });
