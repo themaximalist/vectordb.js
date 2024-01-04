@@ -1,6 +1,6 @@
 {
     "name": "@themaximalist/vectordb.js",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Simple local vector database",
     "main": "src/index.js",
     "type": "module",
@@ -18,7 +18,8 @@
     "author": "The Maximalist",
     "license": "MIT",
     "dependencies": {
-        "@themaximalist/embeddings.js": "^0.0.1",
+        "@themaximalist/embeddings.js": "^0.0.2",
+        "debug": "^4.3.4",
         "hnswlib-node": "^2.1.0",
         "mocha": "^10.2.0"
     }
