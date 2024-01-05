@@ -82,49 +82,5 @@ export default class VectorDB {
 
         return results;
     }
-
 }
 
-/*
-
-
-async function main() {
-    // Allocate a pipeline for sentiment-analysis
-    // text-classification,token-classification,question-answering,fill-mask,summarization,translation,text2text-generation,text-generation,zero-shot-classification,audio-classification,zero-shot-audio-classification,automatic-speech-recognition,text-to-audio,image-to-text,image-classification,image-segmentation,zero-shot-image-classification,object-detection,zero-shot-object-detection,document-question-answering,image-to-image,depth-estimation,feature-extraction
-
-    let pipe = await pipeline('feature-extraction', "Xenova/all-MiniLM-L6-v2", {
-        config: {
-
-        }
-    });
-
-    const trump = await pipe('Donald Trump');
-    const obama = await pipe('Barack Obama');
-    const cat = await pipe('Garfield the Cat');
-    const clinton = await pipe('Bill Clinton');
-
-    // console.log(trump.tolist()[0].length);
-    console.log(trump.size);
-    console.log(obama.size);
-    console.log(cat.size);
-    console.log(clinton.size);
-    // console.log(Array.prototype.slice.call(cat.data).length);
-    // console.log(Array.prototype.slice.call(clinton.data).length);
-
-    index.addPoint(trump.size(1536), 0);
-    // index.addPoint(Array.prototype.slice.call(obama.data), 1);
-    // index.addPoint(Array.prototype.slice.call(cat.data), 2);
-    // index.addPoint(Array.prototype.slice.call(clinton.data), 3);
-
-
-    const result = index.searchknn(array.prototype.slice.call(trump.data), 3);
-    console.log(result);
-
-    // console.log(cosineSimilarity(trump.data, obama.data));
-    // console.log(cosineSimilarity(trump.data, cat.data));
-    // console.log(cosineSimilarity(trump.data, clinton.data));
-    // console.log(cosineSimilarity(obama.data, clinton.data));
-}
-
-main();
-*/
