@@ -8,6 +8,7 @@
 -   Caches embeddings to `embeddings.cache.json`
 -   Automatically resizes database size
 -   Store objects with embeddings
+-   MIT license
 
 
 
