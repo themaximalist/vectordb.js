@@ -1,3 +1,5 @@
+import "dotenv-extended/config.js"
+
 import assert from "assert"
 import VectorDB from "../src/index.js"
 
@@ -35,7 +37,7 @@ describe("VectorDB", function () {
     it("auto resize", async function () {
         this.timeout(10000);
 
-        const db = new VectorDB(384, 1);
+        const db = new VectorDB({ size: 1 });
         assert(db);
 
         await db.add("green");
@@ -50,7 +52,7 @@ describe("VectorDB", function () {
     it("openai embeddings", async function () {
         this.timeout(10000);
 
-        const db = new VectorDB(1536, 10, "openai");
+        const db = new VectorDB({ dimensions: 1536, size: 10, embeddingOptions: { service: "openai" } });
         assert(db);
 
         await db.add("orange");
@@ -121,5 +123,29 @@ describe("VectorDB", function () {
         assert(results.length === 2);
         assert(results[0].input === "orange");
         assert(results[0].object === "sky");
+    });
+
+    it("modeldeployer embeddings", async function () {
+        this.timeout(10000);
+
+        const db = new VectorDB({
+            dimensions: 1536,
+            size: 10,
+            embeddingOptions: {
+                service: "modeldeployer",
+                model: "7cd96f49-9653-4d03-b47d-65bcee807e71",
+                apikey: process.env.OPENAI_API_KEY
+            }
+        });
+        assert(db);
+
+        await db.add("orange");
+        await db.add("blue");
+        await db.add("green");
+        await db.add("purple");
+
+        const results = await db.search("dark orange", 4);
+        assert(results.length === 4);
+        assert(results[0].input === "orange");
     });
 });

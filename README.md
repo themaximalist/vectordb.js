@@ -40,10 +40,7 @@ const result = await db.search("light orange");
 ```javascript
 import VectorDB from "@themaximalist/vectordb.js"
 
-// 1536 dimensionsize
-// 100 default db size (autoresizes)
-// "local" (default) or "openai" for embeddings provider
-const db = new VectorDB(1536, 100, "openai");
+const db = new VectorDB({ dimensions: 1536, size: 100, embeddingOptions: { service: "openai"});
 
 await db.add("orange");
 await db.add("blue");

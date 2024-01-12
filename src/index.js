@@ -7,11 +7,17 @@ const HierarchicalNSW = HNSW.HierarchicalNSW;
 import embeddings from "@themaximalist/embeddings.js"
 
 export default class VectorDB {
-    constructor(dimensions = 384, size = 100, embeddings_provider = "local") {
-        this.db = new HierarchicalNSW("l2", dimensions);
-        this.embeddings_provider = embeddings_provider;
-        this.size = size;
-        this.db.initIndex(size);
+    constructor(options = {}) {
+        if (typeof options !== "object") { throw new Error("options must be an object") }
+        if (typeof options.dimensions === "undefined") { options.dimensions = 384; }
+        if (typeof options.size === "undefined") { options.size = 100; }
+        if (typeof options.embeddingOptions === "undefined") { options.embeddingOptions = {} };
+
+        this.db = new HierarchicalNSW("l2", options.dimensions);
+        this.embeddingOptions = options.embeddingOptions;
+        this.size = options.size;
+        this.db.initIndex(options.size);
+        this.embeddingOptions = options.embeddingOptions;
         this.inputs = [];
         this.embeddings = [];
         this.objects = [];
@@ -24,12 +30,13 @@ export default class VectorDB {
         this.db.resizeIndex(this.size);
     }
 
-    async embedding(input) {
+    async embedding(input, options = {}) {
         if (this.cache[input]) {
             return this.cache[input];
         }
 
-        const embedding = await embeddings(input, this.embeddings_provider);
+        const embeddingOptions = Object.assign({}, this.embeddingOptions, options);
+        const embedding = await embeddings(input, embeddingOptions);
         this.cache[input] = embedding;
         return embedding;
     }
