@@ -1,7 +1,7 @@
 {
     "name": "@themaximalist/vectordb.js",
-    "version": "0.0.4",
-    "description": "Simple local vector database",
+    "version": "0.0.5",
+    "description": "In-memory vector database",
     "main": "src/index.js",
     "type": "module",
     "directories": {

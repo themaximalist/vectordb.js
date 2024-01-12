@@ -52,7 +52,7 @@ describe("VectorDB", function () {
     it("openai embeddings", async function () {
         this.timeout(10000);
 
-        const db = new VectorDB({ dimensions: 1536, size: 10, embeddingOptions: { service: "openai" } });
+        const db = new VectorDB({ dimensions: 1536, size: 10, embeddings: { service: "openai" } });
         assert(db);
 
         await db.add("orange");
@@ -131,12 +131,13 @@ describe("VectorDB", function () {
         const db = new VectorDB({
             dimensions: 1536,
             size: 10,
-            embeddingOptions: {
+            embeddings: {
+                endpoint: process.env.MODELDEPLOYER_ENDPOINT,
                 service: "modeldeployer",
-                model: "7cd96f49-9653-4d03-b47d-65bcee807e71",
-                apikey: process.env.OPENAI_API_KEY
+                model: process.env.MODELDEPLOYER_MODEL,
             }
         });
+
         assert(db);
 
         await db.add("orange");
