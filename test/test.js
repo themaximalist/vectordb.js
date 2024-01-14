@@ -132,9 +132,9 @@ describe("VectorDB", function () {
             dimensions: 1536,
             size: 10,
             embeddings: {
-                endpoint: process.env.MODELDEPLOYER_ENDPOINT,
                 service: "modeldeployer",
                 model: process.env.MODELDEPLOYER_MODEL,
+                apikey: process.env.OPENAI_API_KEY
             }
         });
 

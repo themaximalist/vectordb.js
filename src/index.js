@@ -4,7 +4,7 @@ const log = Debug("vectordb");
 import HNSW from "hnswlib-node"
 const HierarchicalNSW = HNSW.HierarchicalNSW;
 
-import embeddings from "@themaximalist/embeddings.js"
+import Embeddings from "@themaximalist/embeddings.js"
 
 export default class VectorDB {
     constructor(options = {}) {
@@ -30,15 +30,18 @@ export default class VectorDB {
     }
 
     async embedding(input, options = {}) {
+        if (!this.embed) {
+            const embeddingOptions = Object.assign({}, this.options.embeddings, options);
+            this.embed = new Embeddings(embeddingOptions);
+        }
+
         if (this.cache[input]) {
             log(`cache hit for ${input}`);
             return this.cache[input];
         }
 
-        const embeddingOptions = Object.assign({}, this.options.embeddings, options);
-        log(`fetching embeddings for ${input} - ${JSON.stringify(embeddingOptions)}`);
-
-        const embedding = await embeddings(input, embeddingOptions);
+        log(`fetching embeddings for ${input}`);
+        const embedding = await this.embed.fetch(input);
         this.cache[input] = embedding;
 
         return embedding;
