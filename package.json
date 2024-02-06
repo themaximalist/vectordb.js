@@ -1,9 +1,14 @@
 {
     "name": "@themaximalist/vectordb.js",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "In-memory vector database",
     "main": "src/index.js",
     "type": "module",
+    "homepage": "https://vectordbjs.themaximalist.com",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/themaximal1st/vectordb.js.git"
+    },
     "directories": {
         "test": "test"
     },
