@@ -1,8 +1,17 @@
 # vectordb.js
 
-> Simple embeddings and vector search for NodeJS
+<img src="logo.png" />
 
-VectorDB is the simplest way to do text similarity in Node.js
+<div class="badges" style="text-align: center; margin-top: 0px;">
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/themaximal1st/vectordb.js">
+<img alt="NPM Downloads" src="https://img.shields.io/npm/dt/%40themaximalist%2Fvectordb.js">
+<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/themaximal1st/vectordb.js">
+<img alt="GitHub License" src="https://img.shields.io/github/license/themaximal1st/vectordb.js">
+</div>
+<br />
+
+
+`VectorDB.js` is the simplest way to do text similarity in Node.js
 
 -   Uses [hnswlib-node](https://github.com/yoshoku/hnswlib-node) for simple vector search
 -   Uses [embeddings.js](https://github.com/themaximal1st/embeddings.js) for simple text embeddings
@@ -45,7 +54,9 @@ npm install @xenova/transformers
 
 ## OpenAI embeddings
 
-VectorDB.js works with local or OpenAI embeddings. To use OpenAI (`text-embedding-ada-002`) either pass an `apikey` to the `embeddings` options or set the `OPENAI_API_KEY` environment variable.
+VectorDB.js works with local or OpenAI embeddings.
+
+To use OpenAI (`text-embedding-ada-002`) either pass an `apikey` to the `embeddings` options or set the `OPENAI_API_KEY` environment variable.
 
 ```javascript
 import VectorDB from "@themaximalist/vectordb.js"
@@ -115,13 +126,19 @@ assert(results[0].object.grass == "lawn");
 
 
 
+## Projects
 
-## About
+`VectorDB.js` is currently used in the following projects:
 
-https://themaximalist.com
+-   [AI.js](https://aijs.themaximalist.com)
+-   [Model Deployer](https://modeldeployer.com)
 
-https://twitter.com/themaximal1st
 
+
+## Author
+
+-   [The Maximalist](https://themaximalist.com/)
+-   [@themaximal1st](https://twitter.com/themaximal1st)
 
 
 ## License
