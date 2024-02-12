@@ -14,7 +14,7 @@
 `VectorDB.js` is the simplest way to do text similarity in Node.js
 
 -   Uses [hnswlib-node](https://github.com/yoshoku/hnswlib-node) for simple vector search
--   Uses [embeddings.js](https://github.com/themaximal1st/embeddings.js) for simple text embeddings
+-   Uses [Embeddings.js](https://embeddingsjs.themaximalist.com) for simple text embeddings
 -   Supports local embeddings and OpenAI
 -   Caches embeddings to `embeddings.cache.json`
 -   Automatically resizes database size
@@ -130,8 +130,10 @@ assert(results[0].object.grass == "lawn");
 
 `VectorDB.js` is currently used in the following projects:
 
--   [AI.js](https://aijs.themaximalist.com)
--   [Model Deployer](https://modeldeployer.com)
+-   [AI.js](https://aijs.themaximalist.com) — simple AI library
+-   [Model Deployer](https://modeldeployer.com) — deploy AI models in production
+-   [HyperType](https://hypertypelang.com) — knowledge graph toolkit
+-   [HyperTyper](https://hypertyper.com) — multidimensional mind mapping
 
 
 
