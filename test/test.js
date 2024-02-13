@@ -65,6 +65,22 @@ describe("VectorDB", function () {
         assert(results[0].input === "orange");
     });
 
+    it("mistral embeddings", async function () {
+        this.timeout(10000);
+
+        const db = new VectorDB({ dimensions: 1024, size: 10, embeddings: { service: "mistral" } });
+        assert(db);
+
+        await db.add("orange");
+        await db.add("blue");
+        await db.add("green");
+        await db.add("purple");
+
+        const results = await db.search("dark orange", 4);
+        assert(results.length === 4);
+        assert(results[0].input === "orange");
+    });
+
     it("add reference objects", async function () {
         this.timeout(10000);
 
@@ -133,8 +149,8 @@ describe("VectorDB", function () {
             size: 10,
             embeddings: {
                 service: "modeldeployer",
-                model: process.env.MODELDEPLOYER_MODEL,
-                apikey: process.env.OPENAI_API_KEY
+                endpoint: process.env.MODELDEPLOYER_ENDPOINT,
+                model: process.env.MODELDEPLOYER_API_KEY,
             }
         });
 

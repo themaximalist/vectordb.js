@@ -15,7 +15,7 @@
 
 -   Uses [hnswlib-node](https://github.com/yoshoku/hnswlib-node) for simple vector search
 -   Uses [Embeddings.js](https://embeddingsjs.themaximalist.com) for simple text embeddings
--   Supports local embeddings and OpenAI
+-   Supports OpenAI, Mistral and local embeddings
 -   Caches embeddings to `embeddings.cache.json`
 -   Automatically resizes database size
 -   Store objects with embeddings
@@ -52,16 +52,16 @@ npm install @xenova/transformers
 
 
 
-## OpenAI embeddings
+## Switch Embedding Models
 
-VectorDB.js works with local or OpenAI embeddings.
+VectorDB.js works with OpenAI, Mistral or local embeddings.
 
-To use OpenAI (`text-embedding-ada-002`) either pass an `apikey` to the `embeddings` options or set the `OPENAI_API_KEY` environment variable.
+To use OpenAI (`text-embedding-ada-002`) or Mistral (`mistral-embed`), either pass an `apikey` to the `embeddings` options or set the `OPENAI_API_KEY` or `MISTRAL_API_KEY` environment variable.
 
 ```javascript
 import VectorDB from "@themaximalist/vectordb.js"
 
-const db = new VectorDB({ dimensions: 1536, size: 100, embeddings: { service: "openai"});
+const db = new VectorDB({ dimensions: 1536, embeddings: { service: "openai"});
 
 await db.add("orange");
 await db.add("blue");
@@ -73,6 +73,22 @@ const results = await db.search("light orange", 4);
 assert(results.length === 4);
 assert(results[0].input === "orange");
 ```
+
+With Mistral Embeddings:
+
+```javascript
+const db = new VectorDB({ dimensions: 1024, embeddings: { service: "mistral"});
+// ...
+```
+
+With Local embeddings:
+
+```javascript
+const db = new VectorDB(); // defaults to local embeddings
+// ...
+```
+
+Being able to easily switch embeddings providers ensures you don't get locked in!
 
 
 
