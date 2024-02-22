@@ -9,7 +9,7 @@ body {
 }
 
 #content {
-    padding: 0px 5px 5px 5px;
+    padding: 0px 7px 7px 7px;
 }
 
 h1 {
@@ -40,7 +40,7 @@ header {
 }
 
 ul li {
-    line-height: 1.5;
+    line-height: 1.6;
     margin-bottom: 5px;
 }
 
@@ -80,6 +80,19 @@ h4,
 h5,
 h6 {
     margin-top: 70px;
+}
+
+.compressed-group h2,
+.compressed-group h3,
+.compressed-group h4,
+.compressed-group h5,
+.compressed-group h6 {
+    margin-top: 50px;
+    margin-bottom: 0px;
+}
+
+.compressed-group > :first-child {
+    margin-top: 20px;
 }
 
 .badges img {

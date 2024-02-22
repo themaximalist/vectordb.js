@@ -182,7 +182,7 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-
 <p>With Mistral Embeddings:</p>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> db <span class="op">=</span> <span class="kw">new</span> <span class="fu">VectorDB</span>({</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">dimensions</span><span class="op">:</span> <span class="dv">1536</span><span class="op">,</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">dimensions</span><span class="op">:</span> <span class="dv">1024</span><span class="op">,</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">embeddings</span><span class="op">:</span> {</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">&quot;mistral&quot;</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  }</span>
@@ -210,6 +210,84 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">assert</span>(results[<span class="dv">0</span>]<span class="op">.</span><span class="at">object</span><span class="op">.</span><span class="at">grass</span> <span class="op">==</span> <span class="st">&quot;lawn&quot;</span>)<span class="op">;</span></span></code></pre></div>
 <p>This makes it easy to store metadata about the embedding, like an
 object id, URL, etc…</p>
+<h2 id="vectordb-api">VectorDB API</h2>
+<p>The <code>VectorDB.js</code> library offers a simple API designed for
+easy initialization and configuration of vector databases. Below is an
+outline of how to get started and configure the <code>VectorDB</code>
+class.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">new</span> <span class="fu">VectorDB</span>({</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">dimensions</span><span class="op">:</span> <span class="dv">384</span><span class="op">,</span> <span class="co">// Default: 384. The dimensionality of the embeddings.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">size</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span>       <span class="co">// Default: 100. Initial size of the database; automatically resizes</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">embeddings</span><span class="op">:</span> {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">&quot;openai&quot;</span> <span class="co">// Configuration for the embeddings service.</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p><strong>Options</strong></p>
+<ul>
+<li><strong><code>dimensions</code></strong> <code>&lt;int&gt;</code>:
+Size of the embeddings. Default is <code>384</code>.</li>
+<li><strong><code>size</code></strong> <code>&lt;int&gt;</code>: Initial
+size of the database, will automatically resize. Default is
+<code>100</code>.</li>
+<li><strong><code>embeddings</code></strong>
+<code>&lt;object&gt;</code>: <a
+href="https://embeddingsjs.themaximalist.com">Embeddings.js</a> config
+options
+<ul>
+<li><strong><code>service</code></strong> <code>&lt;string&gt;</code>:
+The service for generating embeddings, <code>transformer</code>,
+<code>openai</code> or <code>mistral</code></li>
+</ul></li>
+</ul>
+<p><strong>Methods</strong></p>
+<div class="compressed-group">
+<h4
+id="async-addinputstring-objobject"><code>async add(input=&lt;string&gt;, obj=&lt;object&gt;)</code></h4>
+<p>Adds a new text string to the database, with an optional JavaScript
+object.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> vectordb<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;Hello World&quot;</span><span class="op">,</span> { <span class="dt">dbid</span><span class="op">:</span> <span class="dv">1234</span> })<span class="op">;</span></span></code></pre></div>
+<h4
+id="async-searchinputstring-numint-thresholdfloat"><code>async search(input=&lt;string&gt;, num=&lt;int&gt;, threshold=&lt;float&gt;)</code></h4>
+<p>Search the vector database for a string input, no more than
+<code>num</code> and only if the distance is under
+<code>threshold</code>.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 5 results closer than 0.5 distance</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> vectordb<span class="op">.</span><span class="fu">search</span>(<span class="st">&quot;Hello&quot;</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="fl">0.5</span>)<span class="op">;</span></span></code></pre></div>
+<h4 id="resizesizenumber"><code>resize(size=&lt;number&gt;)</code></h4>
+<p>Resizes the database to specific size, handled automatically but can
+be set explicitly.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vectordb<span class="op">.</span><span class="fu">resize</span>(size)<span class="op">;</span></span></code></pre></div>
+</div>
+<p><strong>Response</strong></p>
+<p><code>VectorDB.js</code> returns results from
+<code>vectordb.search()</code> as a simple array of objects that follow
+this format:</p>
+<ul>
+<li><strong><code>input</code></strong> <code>&lt;string&gt;</code>:
+Text string match</li>
+<li><strong><code>distance</code></strong> <code>&lt;float&gt;</code>:
+Similarity to search string, lower distance means more similar.</li>
+<li><strong><code>object</code></strong> <code>&lt;object&gt;</code>:
+Optional object returned if attached</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>[</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">input</span><span class="op">:</span> <span class="st">&quot;Red&quot;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">distance</span><span class="op">:</span> <span class="fl">0.54321</span><span class="op">,</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">object</span><span class="op">:</span> {</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">dbid</span><span class="op">:</span> <span class="dv">123</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
+<p>The <code>VectorDB.js</code> API aims to make it simple to do text
+similarity in Node.js—without getting locked into an expensive cloud
+provider or embedding model.</p>
 <h2 id="vectordb.js-in-production">VectorDB.js in Production</h2>
 <p><code>VectorDB.js</code> works great by itself, but was built
 side-by-side to work with <a href="https://modeldeployer.com">Model
@@ -222,21 +300,21 @@ with specific settings and more.</p>
 download and run models locally, they can use your API, or they can
 provide their own API key.</p>
 <p>It works out of the box with VectorDB.js.</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> db <span class="op">=</span> <span class="kw">new</span> <span class="fu">VectorDB</span>({</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">embeddings</span><span class="op">:</span> {</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">&quot;modeldeployer&quot;</span><span class="op">,</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">model</span><span class="op">:</span> <span class="st">&quot;api-key&quot;</span><span class="op">,</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;orange&quot;</span><span class="op">,</span> <span class="st">&quot;oranges&quot;</span>)<span class="op">;</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;blue&quot;</span><span class="op">,</span> [<span class="st">&quot;sky&quot;</span><span class="op">,</span> <span class="st">&quot;water&quot;</span>])<span class="op">;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;green&quot;</span><span class="op">,</span> { <span class="st">&quot;grass&quot;</span><span class="op">:</span> <span class="st">&quot;lawn&quot;</span> })<span class="op">;</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;purple&quot;</span><span class="op">,</span> { <span class="st">&quot;flowers&quot;</span><span class="op">:</span> <span class="dv">214</span> })<span class="op">;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> results <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">search</span>(<span class="st">&quot;light green&quot;</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">assert</span>(results[<span class="dv">0</span>]<span class="op">.</span><span class="at">object</span><span class="op">.</span><span class="at">grass</span> <span class="op">==</span> <span class="st">&quot;lawn&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> db <span class="op">=</span> <span class="kw">new</span> <span class="fu">VectorDB</span>({</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">embeddings</span><span class="op">:</span> {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">&quot;modeldeployer&quot;</span><span class="op">,</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">model</span><span class="op">:</span> <span class="st">&quot;api-key&quot;</span><span class="op">,</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;orange&quot;</span><span class="op">,</span> <span class="st">&quot;oranges&quot;</span>)<span class="op">;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;blue&quot;</span><span class="op">,</span> [<span class="st">&quot;sky&quot;</span><span class="op">,</span> <span class="st">&quot;water&quot;</span>])<span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;green&quot;</span><span class="op">,</span> { <span class="st">&quot;grass&quot;</span><span class="op">:</span> <span class="st">&quot;lawn&quot;</span> })<span class="op">;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;purple&quot;</span><span class="op">,</span> { <span class="st">&quot;flowers&quot;</span><span class="op">:</span> <span class="dv">214</span> })<span class="op">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> results <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">search</span>(<span class="st">&quot;light green&quot;</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="fu">assert</span>(results[<span class="dv">0</span>]<span class="op">.</span><span class="at">object</span><span class="op">.</span><span class="at">grass</span> <span class="op">==</span> <span class="st">&quot;lawn&quot;</span>)<span class="op">;</span></span></code></pre></div>
 <p>Learn more about <a
 href="https://modeldeployer.themaximalist.com">deploying embeddings with
 Model Deployer</a>.</p>

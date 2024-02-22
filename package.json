@@ -1,6 +1,6 @@
 {
     "name": "@themaximalist/vectordb.js",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "In-memory vector database",
     "main": "src/index.js",
     "type": "module",

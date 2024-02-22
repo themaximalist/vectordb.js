@@ -22,6 +22,7 @@
 -   MIT license
 
 
+
 ## Installation
 
 Install `VectorDB.js` from NPM:
@@ -43,6 +44,8 @@ export OPENAI_API_KEY=...
 export MISTRAL_API_KEY=...
 ```
 
+
+
 ## Usage
 
 To find similar strings, add a few to the database, and then search.
@@ -57,6 +60,7 @@ await db.add("blue");
 const result = await db.search("light orange");
 // [ { input: 'orange', distance: 0.3109036684036255 } ]
 ```
+
 
 
 ## Embedding Models
@@ -88,7 +92,7 @@ With Mistral Embeddings:
 
 ```javascript
 const db = new VectorDB({
-  dimensions: 1536,
+  dimensions: 1024,
   embeddings: {
     service: "mistral"
   }
@@ -100,6 +104,7 @@ const db = new VectorDB({
 Being able to easily switch embeddings providers ensures you don't get locked in!
 
 `VectorDB.js` was built on top of [Embeddings.js](https://embeddingsjs.themaximalist.com/), and passes the full `embeddings` config option to `Embeddings.js`.
+
 
 
 ## Embeddings with Objects
@@ -120,6 +125,83 @@ assert(results[0].object.grass == "lawn");
 
 This makes it easy to store metadata about the embedding, like an object id, URL, etc...
 
+
+
+## VectorDB API
+
+The `VectorDB.js` library offers a simple API designed for easy initialization and configuration of vector databases. Below is an outline of how to get started and configure the `VectorDB` class.
+
+
+```javascript
+new VectorDB({
+  dimensions: 384, // Default: 384. The dimensionality of the embeddings.
+  size: 100,       // Default: 100. Initial size of the database; automatically resizes
+  embeddings: {
+    service: "openai" // Configuration for the embeddings service.
+  }
+});
+```
+
+**Options**
+
+* **`dimensions`** `<int>`: Size of the embeddings. Default is `384`.
+* **`size`** `<int>`: Initial size of the database, will automatically resize. Default is `100`.
+* **`embeddings`** `<object>`: [Embeddings.js](https://embeddingsjs.themaximalist.com) config options
+  * **`service`** `<string>`: The service for generating embeddings, `transformer`, `openai` or `mistral`
+
+
+**Methods**
+
+<div class="compressed-group">
+
+#### `async add(input=<string>, obj=<object>)`
+
+Adds a new text string to the database, with an optional JavaScript object.
+
+```javascript
+await vectordb.add("Hello World", { dbid: 1234 });
+```
+
+#### `async search(input=<string>, num=<int>, threshold=<float>)`
+
+Search the vector database for a string input, no more than `num` and only if the distance is under `threshold`.
+
+```javascript
+// 5 results closer than 0.5 distance
+await vectordb.search("Hello", 5, 0.5);
+```
+
+#### `resize(size=<number>)`
+
+Resizes the database to specific size, handled automatically but can be set explicitly.
+
+```javascript
+vectordb.resize(size);
+```
+</div>
+
+**Response**
+
+`VectorDB.js` returns results from `vectordb.search()` as a simple array of objects that follow this format:
+
+* **`input`** `<string>`: Text string match
+* **`distance`** `<float>`: Similarity to search string, lower distance means more similar.
+* **`object`** `<object>`: Optional object returned if attached
+
+```javascript
+
+[
+  {
+      input: "Red"
+      distance: 0.54321,
+      object: {
+      	dbid: 123
+      }
+  }
+]
+```
+
+The `VectorDB.js` API aims to make it simple to do text similarity in Node.js—without getting locked into an expensive cloud provider or embedding model.
 
 ## VectorDB.js in Production
 
