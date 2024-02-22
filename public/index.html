@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="description" content="VectorDB.js is the simplest way to do text similarity in Node.js" />
+  <title>VectorDB.js — Simple embeddings and vector search for JavaScript</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        background-color: #2a211c;
+        color: #bdae9d;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #bdae9d;  padding-left: 4px; }
+    div.sourceCode
+      { color: #bdae9d; background-color: #2a211c; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffff00; } /* Alert */
+    code span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #44aa43; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #049b0a; } /* Char */
+    code span.cn { } /* Constant */
+    code span.co { color: #888888; font-style: italic; } /* Comment */
+    code span.do { color: #0066ff; font-style: italic; } /* Documentation */
+    code span.dt { text-decoration: underline; } /* DataType */
+    code span.dv { color: #44aa43; } /* DecVal */
+    code span.er { color: #ffff00; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #44aa43; } /* Float */
+    code span.fu { color: #ff9358; font-weight: bold; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
+    code span.op { } /* Operator */
+    code span.pp { font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #049b0a; } /* SpecialChar */
+    code span.ss { color: #049b0a; } /* SpecialString */
+    code span.st { color: #049b0a; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #049b0a; } /* VerbatimString */
+    code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <script defer data-domain="vectordbjs.themaximalist.com" src="https://s.cac.app/js/script.outbound-links.js"></script>
+  <meta property="og:url" content="https://vectordbjs.themaximalist.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VectorDB.js — Simple embeddings and vector search for JavaScript">
+  <meta property="og:description" content="VectorDB.js is the simplest way to do text similarity in Node.js">
+  <meta property="og:image" content="https://vectordbjs.themaximalist.com/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="vectordbjs.themaximalist.com">
+  <meta property="twitter:url" content="https://vectordbjs.themaximalist.com/">
+  <meta name="twitter:title" content="VectorDB.js — Simple embeddings and vector search for JavaScript">
+  <meta name="twitter:description" content="VectorDB.js is the simplest way to do text similarity in Node.js">
+  <meta name="twitter:image" content="https://vectordbjs.themaximalist.com/logo.png">
+</head>
+<body>
+<div id="content">
+<a class="fork-me" href="https://github.com/themaximal1st/vectordb.js"><img decoding="async" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" loading="lazy" data-recalc-dims="1"></a>
+<header id="title-block-header">
+<h1 class="title">VectorDB.js — Simple embeddings and vector search for
+JavaScript</h1>
+</header>
+<h1 id="vectordb.js">VectorDB.js</h1>
+<p><img src="logo.png" alt="VectorDB.js — Simple in-memory vector database for Node.js" class="logo" /></p>
+<div class="badges" style="text-align: center; margin-top: -10px;">
+<p><a href="https://github.com/themaximal1st/vectordb.js"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/themaximal1st/vectordb.js"></a>
+<a href="https://www.npmjs.com/package/@themaximalist/vectordb.js"><img alt="NPM Downloads" src="https://img.shields.io/npm/dt/%40themaximalist%2Fvectordb.js"></a>
+<a href="https://github.com/themaximal1st/vectordb.js"><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/themaximal1st/vectordb.js"></a>
+<a href="https://github.com/themaximal1st/vectordb.js"><img alt="GitHub License" src="https://img.shields.io/github/license/themaximal1st/vectordb.js"></a></p>
+</div>
+<p><br /></p>
+<p><code>VectorDB.js</code> is a simple in-memory vector database for
+Node.js. It’s an easy way to do text similarity.</p>
+<ul>
+<li>Works 100% locally and in-memory by default</li>
+<li>Uses <a
+href="https://github.com/yoshoku/hnswlib-node">hnswlib-node</a> for
+simple vector search</li>
+<li>Uses <a
+href="https://embeddingsjs.themaximalist.com">Embeddings.js</a> for
+simple text embeddings</li>
+<li>Supports OpenAI, Mistral and local embeddings</li>
+<li>Caches embeddings</li>
+<li>Automatically resizes database size</li>
+<li>Store objects with embeddings</li>
+<li>MIT license</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Install <code>VectorDB.js</code> from NPM:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install @themaximalist/vectordb.js</span></code></pre></div>
+<p>For local embeddings, install the transformers library:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install @xenova/transformers</span></code></pre></div>
+<p>For remote embeddings like OpenAI and Mistral, add an API key to your
+environment.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_API_KEY</span><span class="op">=</span>...</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">MISTRAL_API_KEY</span><span class="op">=</span>...</span></code></pre></div>
+<h2 id="usage">Usage</h2>
+<p>To find similar strings, add a few to the database, and then
+search.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> VectorDB <span class="im">from</span> <span class="st">&quot;@themaximalist/vectordb.js&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> db <span class="op">=</span> <span class="kw">new</span> <span class="fu">VectorDB</span>()<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;orange&quot;</span>)<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;blue&quot;</span>)<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">search</span>(<span class="st">&quot;light orange&quot;</span>)<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">// [ { input: &#39;orange&#39;, distance: 0.3109036684036255 } ]</span></span></code></pre></div>
+<h2 id="embedding-models">Embedding Models</h2>
+<p>By default <code>VectorDB.js</code> uses a local embeddings
+model.</p>
+<p>To switch to another model like OpenAI, pass the service.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> db <span class="op">=</span> <span class="kw">new</span> <span class="fu">VectorDB</span>({</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">dimensions</span><span class="op">:</span> <span class="dv">1536</span><span class="op">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">embeddings</span><span class="op">:</span> {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">&quot;openai&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;orange&quot;</span>)<span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;blue&quot;</span>)<span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;green&quot;</span>)<span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;purple&quot;</span>)<span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">// ask for up to 4 embeddings back, default is 3</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> results <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">search</span>(<span class="st">&quot;light orange&quot;</span><span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">assert</span>(results<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">assert</span>(results[<span class="dv">0</span>]<span class="op">.</span><span class="at">input</span> <span class="op">===</span> <span class="st">&quot;orange&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<p>With Mistral Embeddings:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> db <span class="op">=</span> <span class="kw">new</span> <span class="fu">VectorDB</span>({</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">dimensions</span><span class="op">:</span> <span class="dv">1536</span><span class="op">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">embeddings</span><span class="op">:</span> {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">&quot;mistral&quot;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">// ...</span></span></code></pre></div>
+<p>Being able to easily switch embeddings providers ensures you don’t
+get locked in!</p>
+<p><code>VectorDB.js</code> was built on top of <a
+href="https://embeddingsjs.themaximalist.com/">Embeddings.js</a>, and
+passes the full <code>embeddings</code> config option to
+<code>Embeddings.js</code>.</p>
+<h2 id="embeddings-with-objects">Embeddings with Objects</h2>
+<p><code>VectorDB.js</code> can store any valid JavaScript object along
+with the embedding.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> db <span class="op">=</span> <span class="kw">new</span> <span class="fu">VectorDB</span>()<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;orange&quot;</span><span class="op">,</span> <span class="st">&quot;oranges&quot;</span>)<span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;blue&quot;</span><span class="op">,</span> [<span class="st">&quot;sky&quot;</span><span class="op">,</span> <span class="st">&quot;water&quot;</span>])<span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;green&quot;</span><span class="op">,</span> { <span class="st">&quot;grass&quot;</span><span class="op">:</span> <span class="st">&quot;lawn&quot;</span> })<span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;purple&quot;</span><span class="op">,</span> { <span class="st">&quot;flowers&quot;</span><span class="op">:</span> <span class="dv">214</span> })<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> results <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">search</span>(<span class="st">&quot;light green&quot;</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">assert</span>(results[<span class="dv">0</span>]<span class="op">.</span><span class="at">object</span><span class="op">.</span><span class="at">grass</span> <span class="op">==</span> <span class="st">&quot;lawn&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<p>This makes it easy to store metadata about the embedding, like an
+object id, URL, etc…</p>
+<h2 id="vectordb.js-in-production">VectorDB.js in Production</h2>
+<p><code>VectorDB.js</code> works great by itself, but was built
+side-by-side to work with <a href="https://modeldeployer.com">Model
+Deployer</a>.</p>
+<p>Model Deployer is an easy way to deploy your <a
+href="https://llmjs.themaximalist.com">LLM</a> and Embedding models in
+production. You can monitor usage, rate limit users, generate API keys
+with specific settings and more.</p>
+<p>It’s especially helpful in offering options to your users. They can
+download and run models locally, they can use your API, or they can
+provide their own API key.</p>
+<p>It works out of the box with VectorDB.js.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> db <span class="op">=</span> <span class="kw">new</span> <span class="fu">VectorDB</span>({</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">embeddings</span><span class="op">:</span> {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">service</span><span class="op">:</span> <span class="st">&quot;modeldeployer&quot;</span><span class="op">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">model</span><span class="op">:</span> <span class="st">&quot;api-key&quot;</span><span class="op">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;orange&quot;</span><span class="op">,</span> <span class="st">&quot;oranges&quot;</span>)<span class="op">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;blue&quot;</span><span class="op">,</span> [<span class="st">&quot;sky&quot;</span><span class="op">,</span> <span class="st">&quot;water&quot;</span>])<span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;green&quot;</span><span class="op">,</span> { <span class="st">&quot;grass&quot;</span><span class="op">:</span> <span class="st">&quot;lawn&quot;</span> })<span class="op">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> db<span class="op">.</span><span class="fu">add</span>(<span class="st">&quot;purple&quot;</span><span class="op">,</span> { <span class="st">&quot;flowers&quot;</span><span class="op">:</span> <span class="dv">214</span> })<span class="op">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> results <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">search</span>(<span class="st">&quot;light green&quot;</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">assert</span>(results[<span class="dv">0</span>]<span class="op">.</span><span class="at">object</span><span class="op">.</span><span class="at">grass</span> <span class="op">==</span> <span class="st">&quot;lawn&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<p>Learn more about <a
+href="https://modeldeployer.themaximalist.com">deploying embeddings with
+Model Deployer</a>.</p>
+<h2 id="projects">Projects</h2>
+<p><code>VectorDB.js</code> is currently used in the following
+projects:</p>
+<ul>
+<li><a href="https://aijs.themaximalist.com">AI.js</a> — simple AI
+library</li>
+<li><a href="https://modeldeployer.com">Model Deployer</a> — deploy AI
+models in production</li>
+<li><a href="https://hypertypelang.com">HyperType</a> — knowledge graph
+toolkit</li>
+<li><a href="https://hypertyper.com">HyperTyper</a> — multidimensional
+mind mapping</li>
+</ul>
+<h2 id="license">License</h2>
+<p>MIT</p>
+<h2 id="author">Author</h2>
+<p>Created by <a href="https://twitter.com/themaximal1st">The
+Maximalist</a>, see our <a
+href="https://themaximalist.com/products">open-source projects</a>.</p>
+</div>
+</body>
+</html>
