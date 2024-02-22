@@ -1,4 +1,4 @@
-# VectorDB.js
+## VectorDB.js
 
 <img src="public/logo.png" alt="VectorDB.js — Simple in-memory vector database for Node.js" class="logo" />
 
@@ -23,7 +23,7 @@
 
 
 
-## Installation
+## Install 
 
 Install `VectorDB.js` from NPM:
 
@@ -107,7 +107,7 @@ Being able to easily switch embeddings providers ensures you don't get locked in
 
 
 
-## Embeddings with Objects
+## Custom Objects
 
 `VectorDB.js` can store any valid JavaScript object along with the embedding.
 
@@ -127,7 +127,7 @@ This makes it easy to store metadata about the embedding, like an object id, URL
 
 
 
-## VectorDB API
+## API
 
 The `VectorDB.js` library offers a simple API for using vector databases. To get started, initialize the `VectorDB` class with a config object.
 
@@ -201,9 +201,21 @@ vectordb.resize(size);
 ]
 ```
 
+## Debug
+
+`VectorDB.js` uses the `debug` npm module with the `vectordb.js` namespace.
+
+View debug logs by setting the `DEBUG` environment variable.
+
+```bash
+> DEBUG=vectordb.js*
+> node src/run_vector_search.js
+# debug logs
+```
+
 The `VectorDB.js` API aims to make it simple to do text similarity in Node.js—without getting locked into an expensive cloud provider or embedding model.
 
-## VectorDB.js in Production
+## Deploy
 
 `VectorDB.js` works great by itself, but was built side-by-side to work with [Model Deployer](https://modeldeployer.com).
 
