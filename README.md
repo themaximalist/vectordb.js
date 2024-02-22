@@ -63,7 +63,7 @@ const result = await db.search("light orange");
 
 By default `VectorDB.js` uses a local embeddings model.
 
-To switch to another model like OpenAI, pass the service.
+To switch to another model like OpenAI, pass the service to the `embeddings` config.
 
 ```javascript
 const db = new VectorDB({
