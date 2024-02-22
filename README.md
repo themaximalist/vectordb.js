@@ -129,7 +129,7 @@ This makes it easy to store metadata about the embedding, like an object id, URL
 
 ## VectorDB API
 
-The `VectorDB.js` library offers a simple API designed for easy initialization and configuration of vector databases. Below is an outline of how to get started and configure the `VectorDB` class.
+The `VectorDB.js` library offers a simple API for using vector databases. To get started, initialize the `VectorDB` class with a config object.
 
 
 ```javascript
