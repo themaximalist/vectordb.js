@@ -250,9 +250,12 @@ Learn more about [deploying embeddings with Model Deployer](https://modeldeploye
 `VectorDB.js` is currently used in the following projects:
 
 -   [AI.js](https://aijs.themaximalist.com) — simple AI library
--   [Model Deployer](https://modeldeployer.com) — deploy AI models in production
--   [HyperType](https://hypertypelang.com) — knowledge graph toolkit
--   [HyperTyper](https://hypertyper.com) — multidimensional mind mapping
+-   [Infinity Arcade](https://infinityarcade.com) — play any text adventure game
+-   [News Score](https://newsscore.com) — score and sort the news
+-   [AI Image Explorer](https://aiimageexplorer.com) — image explorer
+-   [Think Machine](https://thinkmachine.com) — AI research assistant
+-   [Thinkable Type](https://thinkabletype.com) — Information Architecture Language
+-   [Minds App](https://mindsapp.com) — AI chat in your menubar
 
 
 
